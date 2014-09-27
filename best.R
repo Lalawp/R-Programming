@@ -20,6 +20,8 @@ best <- function(state, outcome){
   names(outcomedata)[4] <- "heart failure"
   names(outcomedata)[5] <- "pneumonia"
   
+
+
   ##determines if state is a valid input
   validstates <- unique(outcomedata[, 2])
   if(state %in% validstates == FALSE) {
@@ -27,11 +29,18 @@ best <- function(state, outcome){
   } 
   
   
+  
   ##isolates requested state data and removes NAs
   outcomedata <- outcomedata[outcomedata$state==state & outcomedata[outcome] != "Not Available", ]
   
+  ##converts character strings to numeric strings for sorting
+  outcomedata$"heart attack" <- as.numeric(as.character(outcomedata$"heart attack"))
+  outcomedata$"heart failure" <- as.numeric(as.character(outcomedata$"heart failure"))
+  outcomedata$"pneumonia" <- as.numeric(as.character(outcomedata$"pneumonia"))
+  outcomedata$"name" <- as.character(outcomedata$"name")
   ##ranks data by inputed outcome
   outcomedata <- outcomedata[order(outcomedata[[outcome]]), ]
   ##returns the best hospital in a state regarding outcome
-  return(head(outcomedata))    
+  str(outcomedata[1,1])
 } 
+
